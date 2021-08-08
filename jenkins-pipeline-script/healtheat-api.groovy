@@ -33,9 +33,13 @@ node {
             sh(script:"git checkout $GIT_BRANCH")
             sh(script:"cp Dockerfile ../")
         }
+
+    }
+    dir("sample") {
         stage("create docker image and push") {
-            sh(script:"docker build --build-arg JAR_FILE=./api-0.0.1-SNAPSHOT.jar -t cscd053/healtheat-api:0.1 .")
+            sh(script:"docker build --build-arg JAR_FILE=./*.jar -t cscd053/healtheat-api:0.1 .")
             sh(script:"docker push cscd053/healtheat-api:0.1")
         }
     }
 }
+
