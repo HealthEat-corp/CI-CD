@@ -7,6 +7,8 @@ def GIT_BRANCH
 4. Dockerfile Git Clone
 5. 빌드된 jar 파일로 jdk docker image 생성
 6. 생성된 image Docker hub Repository 에 push
+
+TODO : 배포 서버에서 image pull 후 docker run 필요
  */
 node {
     dir ("sample/api") {
