@@ -1,7 +1,13 @@
 #! /usr/bin/groovy
-
 def GIT_BRANCH
-
+/*
+1. Spring project Git Clone
+2. 특정 branch 로 change
+3.  Spring project 빋드
+4. Dockerfile Git Clone
+5. 빌드된 jar 파일로 jdk docker image 생성
+6. 생성된 image Docker hub Repository 에 push
+ */
 node {
     dir ("sample/api") {
         stage("Git Clone and Pull - spring") {
@@ -25,9 +31,11 @@ node {
             GIT_BRANCH = 'master'
 
             sh(script:"git checkout $GIT_BRANCH")
+            sh(script:"cp Dockerfile ../")
         }
         stage("create docker image and push") {
-
+            sh(script:"docker build --build-arg JAR_FILE=./api-0.0.1-SNAPSHOT.jar -t cscd053/healtheat-api:0.1 .")
+            sh(script:"docker push cscd053/healtheat-api:0.1")
         }
     }
 }
